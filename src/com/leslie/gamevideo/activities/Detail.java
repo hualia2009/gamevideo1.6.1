@@ -16,12 +16,17 @@ import android.widget.Toast;
 
 import com.leslie.gamevideo.AppConnect;
 import com.leslie.gamevideo.R;
-import com.leslie.gamevideo.db.MainDbHelper;
+import com.leslie.gamevideo.UpdatePointsNotifier;
+import com.leslie.gamevideo.database.MainDbHelper;
 import com.leslie.gamevideo.entity.Video;
 import com.leslie.gamevideo.utils.AsyncImageLoader;
 import com.leslie.gamevideo.utils.AsyncImageLoader.ImageCallback;
 import com.leslie.gamevideo.utils.Config;
 import com.leslie.gamevideo.utils.Controller;
+import com.leslie.gamevideo.utils.Utils;
+import com.sixnine.live.util.SharePreferenceUtil;
+import com.youku.service.download.DownloadManager;
+import com.youku.service.download.OnCreateDownloadListener;
 
 /**
  * 视频列表-》视频详细信息
@@ -29,7 +34,7 @@ import com.leslie.gamevideo.utils.Controller;
  * @author huang
  * 
  */
-public class Detail extends Activity {
+public class Detail extends Activity implements UpdatePointsNotifier {
 
 	private Video videoInfo;
 	private ImageButton btnPlayN;
@@ -37,12 +42,13 @@ public class Detail extends Activity {
 			longDesc;
 	private ImageView imgThumb;
 	private MainDbHelper dbHelper;
-	private Button btnFav,btnPlay;
+	private Button btnFav,btnDownload;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail);
+		
 		//插屏广告
 //		AppConnect.getInstance(this).initPopAd(this);
 //		boolean hasPopAd = AppConnect.getInstance(this).hasPopAd(this);
@@ -68,6 +74,12 @@ public class Detail extends Activity {
 		initVideoInfo();
 		initOnclickListener();
 	}
+	
+	@Override
+	protected void onResume() {
+	    super.onResume();
+	    AppConnect.getInstance(this).getPoints(this);
+	}
 
 	private void findViews() {
 		tvTitle = (TextView) findViewById(R.id.detail_title);
@@ -78,7 +90,8 @@ public class Detail extends Activity {
 		briefIntro = (TextView) findViewById(R.id.detail_brief_intro);
 		longDesc = (TextView) findViewById(R.id.detail_longdesc);
 		btnFav = (Button) findViewById(R.id.btn_mark);
-		btnPlay = (Button) findViewById(R.id.detail_play);
+//		btnPlay = (Button) findViewById(R.id.detail_play);
+		btnDownload = (Button) findViewById(R.id.btn_download);
 	}
 	private void initVideoInfo() {
 		// 对其进行赋值
@@ -120,7 +133,8 @@ public class Detail extends Activity {
 		VideoBtnclickListener listener = new VideoBtnclickListener();
 		btnFav.setOnClickListener(listener);
 		btnPlayN.setOnClickListener(listener);
-		btnPlay.setOnClickListener(listener);
+//		btnPlay.setOnClickListener(listener);
+		btnDownload.setOnClickListener(listener);
 	}
 
 	public class VideoBtnclickListener implements OnClickListener {
@@ -149,11 +163,48 @@ public class Detail extends Activity {
 				break;
 			case R.id.detail_thumb:
 				play(v);
-			case R.id.detail_play:
-				play(v);
+				break;
+//			case R.id.detail_play:
+//				play(v);
+//				break;
+			case R.id.btn_download:
+			    doDownload();
+			    break;
 			}
 		}
 	}
+	
+	/**
+     * 简单展示下载接口的使用方法，用户可以根据自己的
+     * 通过DownloadManager下载视频
+     */
+    private void doDownload(){
+        
+        if(SharePreferenceUtil.getInstance(Detail.this).getTotalPoint() < 10){
+            //跳到积分获取页面下载积分，并告诉用户需要积分才能下载
+            AppConnect.getInstance(this).showAppOffers(this);
+            Utils.MakeToast(this, "积分不够，请先获取积分");
+            return;
+        }
+        
+        AppConnect.getInstance(this).spendPoints(10,this);
+        
+        //通过DownloadManager类实现视频下载
+        DownloadManager d = DownloadManager.getInstance();
+        /**
+         * 第一个参数为需要下载的视频id
+         * 第二个参数为该视频的标题title
+         * 第三个对下载视频结束的监听，可以为空null
+         */
+        d.createDownload(videoInfo.getId(), videoInfo.getTitle(), new OnCreateDownloadListener() {
+            
+            @Override
+            public void onfinish(boolean isNeedRefresh) {
+                // TODO Auto-generated method stub
+                btnDownload.setEnabled(false);
+            }
+        });
+    }
 	
 	private void play(View view){
 		dbHelper.addHistory(videoInfo);
@@ -164,4 +215,16 @@ public class Detail extends Activity {
 	public void onDestroy() {
 		super.onDestroy();
 	}
+
+    @Override
+    public void getUpdatePoints(String arg0, int arg1) {
+        if(SharePreferenceUtil.getInstance(Detail.this).getTotalPoint() != arg1){
+            SharePreferenceUtil.getInstance(Detail.this).setTotalPoint(arg1);
+        }
+    }
+
+    @Override
+    public void getUpdatePointsFailed(String arg0) {
+        
+    }
 }

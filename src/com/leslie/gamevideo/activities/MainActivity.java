@@ -9,10 +9,13 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 
+import com.leslie.gamevideo.AppConnect;
+import com.leslie.gamevideo.UpdatePointsNotifier;
 import com.sixnine.live.R;
 import com.sixnine.live.fragment.ExampleFragment;
+import com.sixnine.live.util.SharePreferenceUtil;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements UpdatePointsNotifier {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,24 @@ public class MainActivity extends FragmentActivity {
 				ft.commit();
 			}
 		});
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppConnect.getInstance(this).getPoints(this);
+    }
+
+    @Override
+    public void getUpdatePoints(String arg0, int arg1) {
+        if(SharePreferenceUtil.getInstance(this).getTotalPoint() != arg1){
+            SharePreferenceUtil.getInstance(this).setTotalPoint(arg1);
+        }
+    }
+
+    @Override
+    public void getUpdatePointsFailed(String arg0) {
+        
     }
 }
 

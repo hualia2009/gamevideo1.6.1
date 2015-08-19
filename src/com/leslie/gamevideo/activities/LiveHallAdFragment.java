@@ -124,7 +124,6 @@ public class LiveHallAdFragment extends Fragment implements OnClickListener{
 				}
 			});
     		loadVersion();
-    		
         }  
 		return rootView;		
 	}
@@ -191,7 +190,7 @@ public class LiveHallAdFragment extends Fragment implements OnClickListener{
             parent.removeView(rootView);  
         }   
 	}
-
+	
 	public class TypePagerAdapter extends FragmentStatePagerAdapter {
 
 		private String[] TITLES = {"直播", "推荐","女神","好声音", "新秀","劲爆","搞笑","萌妹","热门主播","等级","开播时间"};
@@ -333,6 +332,5 @@ public class LiveHallAdFragment extends Fragment implements OnClickListener{
 			viewPager.setCurrentItem(page);
 		}
 	}
-	
-	
+
 }

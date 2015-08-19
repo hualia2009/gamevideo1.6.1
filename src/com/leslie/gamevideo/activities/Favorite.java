@@ -18,7 +18,7 @@ import android.widget.ListView;
 
 import com.leslie.gamevideo.R;
 import com.leslie.gamevideo.adapter.CollectListAdatpter;
-import com.leslie.gamevideo.db.MainDbHelper;
+import com.leslie.gamevideo.database.MainDbHelper;
 import com.leslie.gamevideo.entity.Video;
 
 /**

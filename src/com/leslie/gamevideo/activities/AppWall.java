@@ -39,7 +39,6 @@ public class AppWall extends Activity {
 		super.onCreate(savedInstanceState);
 		// 加载自定义广告列表布局
 		this.setContentView(getContentView(this));
-		
 		imgbtnHistory = (ImageButton) findViewById(R.id.imgbtnHistory);
 		initOnclickerListener();
 	}

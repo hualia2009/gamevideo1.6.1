@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.leslie.gamevideo.R;
-import com.leslie.gamevideo.db.MainDbHelper;
+import com.leslie.gamevideo.database.MainDbHelper;
 import com.leslie.gamevideo.entity.Video;
 import com.leslie.gamevideo.utils.AsyncImageLoader;
 import com.leslie.gamevideo.utils.AsyncImageLoader.ImageCallback;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.leslie.gamevideo"
-    android:versionCode="7"
-    android:versionName="1.6.1" >
+    android:versionCode="8"
+    android:versionName="2.0" >
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="21" />
@@ -15,6 +15,16 @@
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     
     <application
         android:name=".application.MyApplication"
@@ -131,6 +141,35 @@
             android:exported="true">
         </activity>
         
+        <!-- 已经缓存的视频界面demo -->
+        <activity
+            android:name="com.leslie.gamevideo.activities.CachedActivity"
+            android:launchMode="singleTask"            
+            />
+        <!-- 正在缓存的视频展示界面demo -->
+        <activity
+            android:name="com.leslie.gamevideo.activities.CachingActivity"
+            android:launchMode="singleTask"
+            />        
+        <activity
+            android:name="com.leslie.gamevideo.activities.CacheActivity"
+            android:screenOrientation="portrait"
+            />        
+        <!-- 以下两个为下载时需要的添加的Service -->
+       <service
+            android:name="com.youku.service.download.DownloadService"
+            android:label="Youku Download Service"
+            android:process=":download" >
+            <intent-filter android:priority="1000" >
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.youku.service.acc.AcceleraterService"
+            android:process=":accelerater" >
+            <intent-filter android:priority="1000" >
+            </intent-filter>
+        </service>
+        
         <meta-data android:name="client_id" android:value="78948cc97802c5d3"/>
         <meta-data android:name="client_secret" android:value="a627aca258ceb8ce6ab7ad3566383d33"/>
         
@@ -141,5 +180,21 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="waps" />
+        
+        <!-- 移动云AppX SDK -->
+        <activity android:name="com.baidu.appx.ui.BDInnerBrowser" />
+
+        <receiver android:name="com.baidu.appx.app_download.CompleteReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+
+                <data android:scheme="package" />
+                <!-- 注意！！ 这句必须要加，否则接收不到安装完成广播 -->
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

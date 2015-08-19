@@ -50,7 +50,7 @@
     <string name="channel">频道</string>
     <string name="sort">排行</string>
     <string name="search">搜索</string>
-    <string name="downloadwatch">推荐应用</string>
+    <string name="downloadwatch">美女直播</string>
     <string name="more">更多</string>
     <string name="loading">正在载入…</string>
     <color name="color_statistic">#ff6600</color>
@@ -85,6 +85,9 @@
     <string name="more_favorite">收藏</string>
     <string name="more_history">历史</string>
     <string name="more_live">美女直播</string>
+    <string name="more_app">应用</string>
+    <string name="more_coin">我的积分</string>
+    <string name="more_download">我的下载</string>
     <string name="detail_share">分享</string>
     <string name="detail_play">播放</string>
     <string name="detail_reload">离线观看</string>

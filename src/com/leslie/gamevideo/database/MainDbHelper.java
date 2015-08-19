@@ -1,4 +1,5 @@
-package com.leslie.gamevideo.db;
+package com.leslie.gamevideo.database;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

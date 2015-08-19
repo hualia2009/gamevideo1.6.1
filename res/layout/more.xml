@@ -24,11 +24,15 @@
                 style="@style/setting_tv_style"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/more_favorite"
                 android:focusableInTouchMode="true"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
                 android:text="@string/favorites" />
+            <ImageView 
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/arrow_normal"/>
         </RelativeLayout>
 
         <ImageView
@@ -46,8 +50,14 @@
                 style="@style/setting_tv_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/more_history"
                 android:text="@string/history" />
+            <ImageView 
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/arrow_normal"/>
         </RelativeLayout>
 
         <ImageView
@@ -83,8 +93,14 @@
                 style="@style/setting_tv_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/more_feedback"
                 android:text="@string/feedback" />
+            <ImageView 
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/arrow_normal"/>
         </RelativeLayout>
 
         <ImageView
@@ -102,31 +118,98 @@
                 style="@style/setting_tv_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/more_about"
                 android:text="@string/more_declare" />
+            <ImageView 
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/arrow_normal"/>
+        </RelativeLayout>
+        
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/list_divider_line" />
+        
+        <!-- 下载 -->
+        <RelativeLayout
+            android:id="@+id/app_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/group_bg"
+            >
+
+            <TextView
+                style="@style/setting_tv_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/more_app"
+                 />
+            <ImageView 
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/arrow_normal"/>
         </RelativeLayout>
 
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/list_divider_line" />
-
+        
+        <!-- 下载 -->
         <RelativeLayout
-            android:id="@+id/more_live"
+            android:id="@+id/coin_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/group_bg"
-            android:gravity="center"
-            android:padding="5.0dip" >
+            >
 
             <TextView
                 style="@style/setting_tv_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/more_live"
-                android:textColor="@color/red"
-                android:textSize="20.0sp" />
+                android:text="@string/more_coin"
+                 />
+            <ImageView 
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/arrow_normal"/>
+        </RelativeLayout>
+        
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/list_divider_line" />
+        
+        <!-- 下载 -->
+        <RelativeLayout
+            android:id="@+id/download_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/group_bg"
+            >
+
+            <TextView
+                style="@style/setting_tv_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/more_download"
+                 />
+            <ImageView 
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/arrow_normal"/>
         </RelativeLayout>
 
         <ImageView

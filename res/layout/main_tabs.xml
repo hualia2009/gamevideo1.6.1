@@ -47,8 +47,9 @@
 				android:tag="radio_button3"
 				android:text="@string/downloadwatch"
 				android:drawableTop="@drawable/icon_download_bg"
+				android:visibility="gone"
 				style="@style/t_main_tab_bottom"
-				android:visibility="gone" />
+				 />
 			<RadioButton
 				android:tag="radio_button4"
 				android:text="@string/more"

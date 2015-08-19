@@ -6,23 +6,37 @@ import java.util.Locale;
 import java.util.Set;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
+import android.widget.Toast;
 
-@SuppressLint("DefaultLocale")
+import com.leslie.gamevideo.R;
+
+@SuppressLint({ "DefaultLocale", "NewApi" })
 public class Utils {
 	private static final String TAG = "Utils";
 
@@ -86,7 +100,7 @@ public class Utils {
 		return flag;
 	}
 
-	public static LayoutParams getRelativeLayoutParams() {
+	public static RelativeLayout.LayoutParams getRelativeLayoutParams() {
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
 				ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -238,5 +252,71 @@ public class Utils {
 		}
 		return result;
 	}
+	
+    public static Toast toast;
+
+    public static void MakeToast(Context context, String message) {
+        if (context != null) {
+            LayoutInflater inflate = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflate.inflate(R.layout.custom_toast, null);
+            if (Utils.toast == null) {
+                Utils.toast = new Toast(context);
+                Utils.toast.setView(view);
+                Utils.toast.setText(message);
+                Utils.toast.setDuration(Toast.LENGTH_SHORT);
+            } else {
+                Utils.toast.setView(view);
+                Utils.toast.setText(message);
+            }
+            Utils.toast.show();
+        }
+    }
+    
+    public interface DialogListenner {
+        public void confirm();
+    }
+    
+    public static void customDialog(Context context, String title,
+            final DialogListenner dialogListenner) {
+        final AlertDialog dialog = new AlertDialog.Builder(context).create();
+        dialog.show();
+        Window window = dialog.getWindow();
+        View view = LayoutInflater.from(context).inflate(R.layout.alert_dialog,
+            null);
+        window.setContentView(view);
+        WindowManager windowManager = ((Activity) context).getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        LayoutParams params = window.getAttributes();
+        Point point = new Point();
+        display.getSize(point);
+        params.width = (int) (point.x * 0.8);
+        window.setAttributes(params);
+
+        TextView mainContent = (TextView) window.findViewById(R.id.title);
+        Button confirm = (Button) window.findViewById(R.id.confirm);
+        Button cancel = (Button) window.findViewById(R.id.cancel);
+
+        mainContent.setText(title);
+        confirm.setText("确认");
+        confirm.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+                dialogListenner.confirm();
+            }
+        });
+        cancel.setText("取消");
+        cancel.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                dialog.cancel();
+            }
+        });
+    }
 
 }
